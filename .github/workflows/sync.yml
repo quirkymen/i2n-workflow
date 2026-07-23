@@ -24,8 +24,8 @@ jobs:
           BACKUP_PAGE_ID: ${{ secrets.BACKUP_PAGE_ID }}
           BACKUP_PASSWORD: ${{ secrets.BACKUP_PASSWORD }}
         run: |
-          chmod +x ./iwara-sync
-          ./iwara-sync --action-mode \
+          chmod +x ./iwara-sync-linux-amd64
+          ./iwara-sync-linux-amd64 --action-mode \
             --notion-key $NOTION_API_KEY \
             --backup-page $BACKUP_PAGE_ID \
             --backup-password $BACKUP_PASSWORD
