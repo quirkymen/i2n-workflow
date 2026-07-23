@@ -1,0 +1,32 @@
+name: Iwara Notion Sync
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+concurrency: 
+  group: iwara-sync-group
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        
+      # 无需 setup-go 和现场 build。仓库已存放二进制文件。
+      
+      - name: Run Iwara Sync (All-in-One)
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          BACKUP_PAGE_ID: ${{ secrets.BACKUP_PAGE_ID }}
+          BACKUP_PASSWORD: ${{ secrets.BACKUP_PASSWORD }}
+        run: |
+          chmod +x ./iwara-sync
+          ./iwara-sync --action-mode \
+            --notion-key $NOTION_API_KEY \
+            --backup-page $BACKUP_PAGE_ID \
+            --backup-password $BACKUP_PASSWORD
+        # 程序包揽：拉取备份 -> 按内建默认边界(4h/200个)执行同步 -> 压轴打包回传 -> 退出
