@@ -28,5 +28,6 @@ jobs:
           ./iwara-sync-linux-amd64 --action-mode \
             --notion-key $NOTION_API_KEY \
             --backup-page $BACKUP_PAGE_ID \
-            --backup-password $BACKUP_PASSWORD
+            --backup-password $BACKUP_PASSWORD \
+            --max-videos 50
         # 程序包揽：拉取备份 -> 按内建默认边界(4h/200个)执行同步 -> 压轴打包回传 -> 退出
